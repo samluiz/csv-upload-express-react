@@ -9,10 +9,40 @@ function processParams(prisma) {
     const startIndex = (page - 1) * limit;
     const endIndex = page * limit;
 
+    const query = {
+        AND: [
+          {
+            name: {
+              contains: name,
+            },
+          },
+          {
+            city: {
+              contains: city,
+            },
+          },
+          {
+            country: {
+              contains: country,
+            },
+          },
+          {
+            favorite_sport: {
+              contains: favorite_sport,
+            },
+          },
+        ],
+      }
+
+    const count = await prisma.user.count({
+      where: query
+    });
+  
+
     const result = {};
-    if (endIndex < (await prisma.user.count())) {
+    if (endIndex < (count)) {
       result.next = {
-        page: page,
+        page: page + 1,
         limit: limit,
       };
     }
@@ -22,34 +52,17 @@ function processParams(prisma) {
         limit: limit,
       };
     }
+    result.current = {
+      page: page,
+      limit: limit,
+    }
+    result.total_pages = Math.ceil((count) / limit);
+    result.total_items = count;
     try {
       result.results = await prisma.user.findMany({
         skip: startIndex,
         take: limit,
-        where: {
-          AND: [
-            {
-              name: {
-                contains: name,
-              },
-            },
-            {
-              city: {
-                contains: city,
-              },
-            },
-            {
-              country: {
-                contains: country,
-              },
-            },
-            {
-              favorite_sport: {
-                contains: favorite_sport,
-              },
-            },
-          ],
-        }
+        where: query
       });
       res.paginatedResult = result;
       next();
