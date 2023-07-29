@@ -91,6 +91,7 @@ const List = () => {
       </div>
       <div className="flex justify-center items-center gap-2">
         <button className="px-2 py-1 bg-transparent text-black rounded-md shadow border border-gray-300 hover:bg-gray-100" onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
+        <span className="text-gray-900">{currentPage} of {totalPages}</span>
         <button className="px-2 py-1 bg-transparent text-black rounded-md shadow border border-gray-300 hover:bg-gray-100" onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}>Next</button>
       </div>
     </section>
