@@ -9,3 +9,8 @@
 
 > npm install
 > npm run dev
+
+## Endpoints:
+
+> /users GET
+> /users POST
