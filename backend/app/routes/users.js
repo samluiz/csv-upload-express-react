@@ -1,13 +1,16 @@
 const express = require('express')
 const upload = require('../services/upload')
 const router = express.Router()
-const prisma = require('../db/prisma')
 const csv = require('csvtojson')
+const prisma = require('../db/prisma')
+const processParams = require('../middlewares/processParams')
 
-router.get("/", async (req, res) => {
+
+router.get("/", async (req, res, next) => {
   try {
-    const users = await prisma.user.findMany()
-    res.json(users)
+    const query = processParams(prisma);
+    await query(req, res, next);
+    res.json(res.paginatedResult)
   } catch (e) {
     res.status(500).json({ error: e.message })
   }
