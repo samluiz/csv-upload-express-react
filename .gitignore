@@ -1,0 +1,5 @@
+backend/node_modules
+backend/.env
+backend/prisma/db
+backend/prisma/migrations
+backend/uploads
