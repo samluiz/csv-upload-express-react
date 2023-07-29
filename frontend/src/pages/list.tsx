@@ -89,6 +89,10 @@ const List = () => {
       </ul>
       {error && <p className="text-red-500">Error while retrieving the users: {error}</p>}
       </div>
+      <div className="flex justify-center items-center gap-2">
+        <button className="px-2 py-1 bg-transparent text-black rounded-md shadow border border-gray-300 hover:bg-gray-100" onClick={() => setCurrentPage(currentPage - 1)} disabled={currentPage === 1}>Previous</button>
+        <button className="px-2 py-1 bg-transparent text-black rounded-md shadow border border-gray-300 hover:bg-gray-100" onClick={() => setCurrentPage(currentPage + 1)} disabled={currentPage === totalPages}>Next</button>
+      </div>
     </section>
     </>
   );
